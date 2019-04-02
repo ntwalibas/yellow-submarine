@@ -149,9 +149,15 @@ def main(matrix, run_id = 0, use_s = 1, use_d = 1, use_ng = 1):
     }
 
     # Training parameters
+    var_cutoff_dim = 17
+    if matrix == "u5" or matrix == "w5":
+        var_cutoff_dim = 15
+    elif matrix == "u6" or matrix == "w6":
+        var_cutoff_dim = 11
+
     training_params = {
         'steps': 400,
-        'cutoff_dim': 17
+        'cutoff_dim': var_cutoff_dim
     }
 
     # Gate structures
@@ -183,6 +189,20 @@ def main(matrix, run_id = 0, use_s = 1, use_d = 1, use_ng = 1):
             {"constant": np.random.random() - 0.5, "name": 's_magnitude_3', 'regularize': True, 'monitor': True},
             {"constant": np.random.random()*2*np.pi, "name": 's_phase_3', 'regularize': True, 'monitor': True}
         ])
+        if matrix == "u5" or matrix == "w5":
+            gates_structure.append([
+                Sgate,
+                4,
+                {"constant": np.random.random() - 0.5, "name": 's_magnitude_4', 'regularize': True, 'monitor': True},
+                {"constant": np.random.random()*2*np.pi, "name": 's_phase_4', 'regularize': True, 'monitor': True}
+            ])
+        if matrix == "u6" or matrix == "w6":
+            gates_structure.append([
+                Sgate,
+                5,
+                {"constant": np.random.random() - 0.5, "name": 's_magnitude_5', 'regularize': True, 'monitor': True},
+                {"constant": np.random.random()*2*np.pi, "name": 's_phase_5', 'regularize': True, 'monitor': True}
+            ])
 
     # Displacement gates structure
     if use_d==1:
@@ -210,6 +230,20 @@ def main(matrix, run_id = 0, use_s = 1, use_d = 1, use_ng = 1):
             {"constant": np.random.random() - 0.5, "name": 'd_magnitude_3', 'regularize': True, 'monitor': True},
             {"constant": np.random.random()*2*np.pi, "name": 'd_phase_3', 'regularize': True, 'monitor': True}
         ])
+        if matrix == "u5" or matrix == "w5":
+            gates_structure.append([
+                Dgate,
+                4,
+                {"constant": np.random.random() - 0.5, "name": 'd_magnitude_4', 'regularize': True, 'monitor': True},
+                {"constant": np.random.random()*2*np.pi, "name": 'd_phase_4', 'regularize': True, 'monitor': True}
+            ])
+        if matrix == "u6" or matrix == "w6":
+            gates_structure.append([
+                Dgate,
+                5,
+                {"constant": np.random.random() - 0.5, "name": 'd_magnitude_5', 'regularize': True, 'monitor': True},
+                {"constant": np.random.random()*2*np.pi, "name": 'd_phase_5', 'regularize': True, 'monitor': True}
+            ])
     
     # Kerr gate structure
     if use_ng==1:
@@ -233,6 +267,18 @@ def main(matrix, run_id = 0, use_s = 1, use_d = 1, use_ng = 1):
             3,
             {"constant": np.random.random() - 0.5, "name": 'kerr_3', 'regularize': True, 'monitor': True}
         ])
+        if matrix == "u5" or matrix == "w5":
+            gates_structure.append([
+                Kgate,
+                4,
+                {"constant": np.random.random() - 0.5, "name": 'kerr_4', 'regularize': True, 'monitor': True}
+            ])
+        if matrix == "u6" or matrix == "w6":
+            gates_structure.append([
+                Kgate,
+                5,
+                {"constant": np.random.random() - 0.5, "name": 'kerr_5', 'regularize': True, 'monitor': True}
+            ])
 
     # Cubic gate structure
     elif use_ng==2:
@@ -256,6 +302,18 @@ def main(matrix, run_id = 0, use_s = 1, use_d = 1, use_ng = 1):
             3,
             {"constant": np.random.random() - 0.5, "name": 'cubic_3', 'regularize': True, 'monitor': True}
         ])
+        if matrix == "u5" or matrix == "w5":
+            gates_structure.append([
+                Vgate,
+                4,
+                {"constant": np.random.random() - 0.5, "name": 'cubic_4', 'regularize': True, 'monitor': True}
+            ])
+        if matrix == "u6" or matrix == "w6":
+            gates_structure.append([
+                Vgate,
+                5,
+                {"constant": np.random.random() - 0.5, "name": 'cubic_5', 'regularize': True, 'monitor': True}
+            ])
 
     print("Starting", use_s, use_d, use_ng, run_id)
     model_dir = "logsAuto2_s_{0}_d_{1}_ng_{2}_run_{3}".format(use_s, use_d, use_ng, run_id)
