@@ -36,7 +36,7 @@ adjacency_matrices = {
         [  2,  0,  8,  2],
         [  7,  8,  0,  1],
         [  0,  2,  1,  0],
-    ]) / 12,
+    ]) / 24,
 
     'w5' : np.array([
         [  0,  2,  7,  9,  0],
@@ -151,9 +151,9 @@ def main(matrix, run_id = 0, use_s = 1, use_d = 1, use_ng = 1):
     # Training parameters
     var_cutoff_dim = 17
     if matrix == "u5" or matrix == "w5":
-        var_cutoff_dim = 15
+        var_cutoff_dim = 12
     elif matrix == "u6" or matrix == "w6":
-        var_cutoff_dim = 11
+        var_cutoff_dim = 9
 
     training_params = {
         'steps': 400,
